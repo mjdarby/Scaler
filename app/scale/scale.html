@@ -1,1 +1,12 @@
-<p>This is the partial for view 1. {{testVal}}</p>
+<p>This is the partial for view 1. {{major}}</p>
+<div>
+  <input ng-model="tempo"/>
+</div>
+<div>
+  <button ng-repeat="item in majors" ng-click="addToList(item)">{{item}}</button>
+</div>
+<div>
+  <ul>
+    <li ng-repeat="item in selected track by $index">{{item}}</li>
+  </ul>
+</div>
