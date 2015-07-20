@@ -1,9 +1,8 @@
 {
-  "name": "angular-seed",
+  "name": "scaler",
   "description": "A starter project for AngularJS",
+  "homepage": "https://github.com/mjdarby/scaler",
   "version": "0.0.0",
-  "homepage": "https://github.com/angular/angular-seed",
-  "license": "MIT",
   "private": true,
   "dependencies": {
     "angular": "~1.4.0",
