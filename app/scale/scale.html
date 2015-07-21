@@ -1,18 +1,6 @@
+<h3>Practice list</h3>
 <div>
-  <h4>Start tempo</h4>
-  <input ng-model="tempo"/>
-  <h4>Tempo increase</h4>
-  <input ng-model="tempoIncrease"/>
-</div>
-<div>
-  <h4>Majors</h4>
-  <button ng-repeat="item in majors" ng-click="addToList(item, 'major')">{{item}}</button>
-</div>
-<div>
-  <h4>Minors</h4>
-  <button ng-repeat="item in minors" ng-click="addToList(item, 'minor')">{{item}}</button>
-</div>
-<div>
+  <p>Remember to play scale and arpeggio!</p>
   <ul>
     <li ng-repeat="item in selected track by $index">
       {{item}}
@@ -20,4 +8,19 @@
       <button ng-click="removeFromList(item)">Remove</button>
     </li>
   </ul>
+</div>
+<h3>Add key</h3>
+<div>
+  <h4>Start tempo</h4>
+  <input ng-model="tempo"/>
+  <h4>Tempo increase</h4>
+  <input ng-model="tempoIncrease"/>
+</div>
+<div>
+  <h4>Add Majors</h4>
+  <button ng-repeat="item in majors" ng-click="addToList(item, 'major')">{{item}}</button>
+</div>
+<div>
+  <h4>Add Minors</h4>
+  <button ng-repeat="item in minors" ng-click="addToList(item, 'minor')">{{item}}</button>
 </div>
