@@ -11,9 +11,34 @@ Today == {{today.valueOf()}}
 {{doneToday}}
 </div>
 <accordion>
-  <accordion-group is-open="status.open">
+  <accordion-group is-open="accordionStatusQuickAdd.open">
     <accordion-heading>
-      Add Key<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+      Quick Add Key List<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': accordionStatusQuickAdd.open, 'glyphicon-chevron-right': !accordionStatusQuickAdd.open}"></i>
+    </accordion-heading>
+    <div>
+      <h4>Starting tempo</h4>
+      <input type="number" ng-model="tempo"/>
+    </div>
+    <div>
+      <h4>Add All Majors</h4>
+      <button type="button" class="btn btn-default" ng-click="addAllToList(majors, 'major')">Go!</button>
+    </div>
+    <div>
+      <h4>Add All Natural Minors</h4>
+      <button type="button" class="btn btn-default" ng-click="addAllToList(minors, 'natural minor')">Go!</button>
+    </div>
+    <div>
+      <h4>Add All Harmonic Minors</h4>
+      <button type="button" class="btn btn-default" ng-click="addAllToList(minors, 'harmonic minor')">Go!</button>
+    </div>
+    <div>
+      <h4>Add All Melodic Minors</h4>
+      <button type="button" class="btn btn-default" ng-click="addAllToList(minors, 'melodic minor')">Go!</button>
+    </div>
+  </accordion-group>
+  <accordion-group is-open="accordionStatusAddKey.open">
+    <accordion-heading>
+      Add Key<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': accordionStatusAddKey.open, 'glyphicon-chevron-right': !accordionStatusAddKey.open}"></i>
     </accordion-heading>
     <div>
       <h4>Starting tempo</h4>
@@ -45,7 +70,7 @@ Today == {{today.valueOf()}}
   </div>
   <div ng-show="selected.length">
     <h3>Practice list</h3>
-    <p>Remember to play both scale and arpeggio (if applicable)! <small>Keys done today: {{doneToday}}</small></p>
+    <p>Remember to play both scale and arpeggio (if applicable)! <small>Keys done today: {{doneToday}} <button type="button" class="btn btn-default" ng-click="resetDoneToday()">(Reset)</button></small></p>
     <h4>Tempo increase</h4>
     <div>
     <input type="number" ng-model="tempoIncrease"/>

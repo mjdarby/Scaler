@@ -62,6 +62,8 @@ angular.module('myApp.scale', ['ngRoute', 'ngCookies', 'ui.bootstrap'])
 
   $scope.newDay = function() {
     $scope.doneToday = 0;
+    cookie.doneToday = 0;
+    $cookies.putObject('scaler', cookie);
   };
 
   $scope.today = new Date();
@@ -78,12 +80,11 @@ angular.module('myApp.scale', ['ngRoute', 'ngCookies', 'ui.bootstrap'])
     $scope.collectLists();
   };
 
-
   $scope.resetDoneToday = function() {
-      $scope.doneToday = 0;
-      cookie.doneToday = 0;
-      $cookies.putObject('scaler', cookie);
-      $scope.collectLists();
+    $scope.doneToday = 0;
+    cookie.doneToday = 0;
+    $cookies.putObject('scaler', cookie);
+    $scope.collectLists();
   };
 
   $scope.addToList = function(key, majorminor) {
@@ -92,6 +93,12 @@ angular.module('myApp.scale', ['ngRoute', 'ngCookies', 'ui.bootstrap'])
     $scope.collectLists();
     cookie.selected = $scope.selected;
     $cookies.putObject('scaler', cookie);
+  };
+
+  $scope.addAllToList = function(keys, majorminor) {
+    keys.forEach(function(element, index, array) {
+      $scope.addToList(element, majorminor);
+    });
   };
 
   $scope.removeFromList = function(item) {
