@@ -28,7 +28,7 @@ angular.module('myApp.scale', ['ngRoute', 'ngCookies', 'ui.bootstrap'])
 
   var cookie = $cookies.getObject('scaler') || {};
   $scope.major = "";
-  $scope.tempo = 80;
+  $scope.tempos = {quick: 80, normal: 80};
   $scope.tempoIncrease = cookie.hasOwnProperty('tempoIncrease') ? cookie.tempoIncrease : 4;
   $scope.selected = cookie.hasOwnProperty('selected') ? cookie.selected : [];
   $scope.keysPerDay = cookie.hasOwnProperty('keysPerDay') ? cookie.keysPerDay : 3;
@@ -99,7 +99,7 @@ angular.module('myApp.scale', ['ngRoute', 'ngCookies', 'ui.bootstrap'])
   };
 
   $scope.addToList = function(key, majorminor) {
-    var newElement = {key: key + " " + majorminor, tempo: parseInt($scope.tempo, 10)};
+    var newElement = {key: key + " " + majorminor, tempo: parseInt($scope.tempos.normal, 10)};
     $scope.selected.push(newElement);
     $scope.collectLists();
     cookie.selected = $scope.selected;
