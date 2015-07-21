@@ -14,7 +14,7 @@ var myFace = function() {
   return "what";
 }
 
-angular.module('myApp.scale', ['ngRoute', 'ngCookies'])
+angular.module('myApp.scale', ['ngRoute', 'ngCookies', 'ui.bootstrap'])
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/scale', {
@@ -24,20 +24,47 @@ angular.module('myApp.scale', ['ngRoute', 'ngCookies'])
 }])
 
 .controller('ScaleCtrl', ['$scope', '$cookies', function($scope, $cookies) {
-  var cookie = $cookies.getObject('scales') || {};
+  $scope.debug = false;
+
+  var cookie = $cookies.getObject('scaler') || {};
   $scope.major = "";
   $scope.tempo = 80;
   $scope.tempoIncrease = 4;
   $scope.selected = cookie.hasOwnProperty('selected') ? cookie.selected : [];
-  $scope.scalesPerDay = cookie.hasOwnProperty('scalesPerDay') ? cookie.selected : 3;
+  $scope.keysPerDay = cookie.hasOwnProperty('keysPerDay') ? cookie.keysPerDay : 3;
+  $scope.doneToday = cookie.hasOwnProperty('doneToday') ? cookie.doneToday : 0;
+
+  if (cookie.hasOwnProperty('lastUsedDate')) {
+    $scope.lastUsedDate = new Date(cookie.lastUsedDate);
+  } else {
+    $scope.lastUsedDate = new Date()
+    $scope.lastUsedDate.setDate($scope.lastUsedDate.getDate() - 1);
+  }
+  $scope.lastUsedDate.setHours(0,0,0,0); // In case the time is non-pure date
+
   $scope.majors = major_chromatic;
   $scope.minors = minor_chromatic;
+
+  $scope.newDay = function() {
+    $scope.doneToday = 0;
+  };
+
+  var today = new Date();
+  today.setHours(0,0,0,0);
+  if ($scope.lastUsedDate != today) {
+    $scope.newDay();
+  }
+
+  $scope.changeKeysPerDay = function() {
+    cookie.keysPerDay = $scope.keysPerDay;
+    $cookies.putObject('scaler', cookie);
+  };
 
   $scope.addToList = function(key, majorminor) {
     var newElement = {key: key + " " + majorminor, tempo: parseInt($scope.tempo, 10)};
     $scope.selected.push(newElement);
     cookie.selected = $scope.selected;
-    $cookies.putObject('scales', cookie);
+    $cookies.putObject('scaler', cookie);
   };
 
   $scope.removeFromList = function(item) {
@@ -47,7 +74,7 @@ angular.module('myApp.scale', ['ngRoute', 'ngCookies'])
       $scope.selected.splice(index, 1);
     }
     cookie.selected = $scope.selected;
-    $cookies.putObject('scales', cookie);
+    $cookies.putObject('scaler', cookie);
   };
 
   $scope.increaseTempo = function(item) {
@@ -57,9 +84,13 @@ angular.module('myApp.scale', ['ngRoute', 'ngCookies'])
       $scope.selected.splice(index, 1);
       item.tempo += $scope.tempoIncrease;
       $scope.selected.push(item);
+      $scope.doneToday += 1;
     }
     cookie.selected = $scope.selected;
-    $cookies.putObject('scales', cookie);
+    cookie.lastUsedDate = new Date();
+    cookie.lastUsedDate.toISOString();
+    cookie.doneToday = $scope.doneToday;
+    $cookies.putObject('scaler', cookie);
   };
 
 }]);

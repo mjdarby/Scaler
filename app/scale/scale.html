@@ -1,26 +1,68 @@
-<h3>Practice list</h3>
-<div>
-  <p>Remember to play scale and arpeggio!</p>
-  <ul>
-    <li ng-repeat="item in selected track by $index">
-      {{item}}
-      <button ng-click="increaseTempo(item)">Done!</button>
-      <button ng-click="removeFromList(item)">Remove</button>
-    </li>
-  </ul>
+<div ng-show="debug">
+LastUsedDate == {{lastUsedDate.toString()}}
 </div>
-<h3>Add key</h3>
-<div>
-  <h4>Start tempo</h4>
-  <input ng-model="tempo"/>
-  <h4>Tempo increase</h4>
-  <input ng-model="tempoIncrease"/>
+<div ng-show="debug">
+{{testVar}}
 </div>
-<div>
-  <h4>Add Majors</h4>
-  <button ng-repeat="item in majors" ng-click="addToList(item, 'major')">{{item}}</button>
+<div ng-show="debug">
+{{doneToday}}
 </div>
+<accordion>
+  <accordion-group is-open="status.open">
+    <accordion-heading>
+      Add Key<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+    </accordion-heading>
+    <div>
+      <h4>Starting tempo</h4>
+      <input type="number" ng-model="tempo"/>
+    </div>
+    <div>
+      <h4>Add Majors</h4>
+      <button type="button" class="btn btn-default" ng-repeat="item in majors" ng-click="addToList(item, 'major')">{{item}}</button>
+    </div>
+    <div>
+      <h4>Add Minors</h4>
+      <button type="button" class="btn btn-default" ng-repeat="item in minors" ng-click="addToList(item, 'minor')">{{item}}</button>
+    </div>
+   </accordion-group>
+</accordion>
 <div>
-  <h4>Add Minors</h4>
-  <button ng-repeat="item in minors" ng-click="addToList(item, 'minor')">{{item}}</button>
+  <div ng-show="!selected.length">
+    <h3>
+    Add some keys and let's get practicing!
+    </h3>
+  </div>
+  <div ng-show="selected.length">
+    <h3>Practice list</h3>
+    <p>Remember to play both scale and arpeggio!</p>
+    <h4>Tempo increase</h4>
+    <div>
+    <input type="number" ng-model="tempoIncrease"/>
+    </div>
+    <h4>Keys per Day</h4>
+    <div>
+    <input type="number" ng-model="keysPerDay" ng-change="changeKeysPerDay()"/>
+    </div>
+    <h4>Keys for Today</h4>
+    <div>
+       <ul class="list-unstyled">
+         <li ng-repeat="item in selected track by $index">
+           <h5><strong>Key</strong> {{item.key}}</h5>
+           <h5><strong>Tempo</strong> {{item.tempo}}</h5>
+           <button type="button" class="btn btn-success" ng-click="increaseTempo(item)">Done!</button>
+           <button type="button" class="btn btn-danger" ng-click="removeFromList(item)">Remove</button>
+         </li>
+       </ul>
+    </div>
+    <h4>Keys for the Future</h4>
+    <div>
+       <ul class="list-unstyled">
+         <li ng-repeat="item in selected track by $index">
+           <h5><strong>Key</strong> {{item.key}}</h5>
+           <h5><strong>Tempo</strong> {{item.tempo}}</h5>
+           <button type="button" class="btn btn-danger" ng-click="removeFromList(item)">Remove</button>
+         </li>
+       </ul>
+    </div>
+  </div>
 </div>
