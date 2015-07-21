@@ -73,7 +73,7 @@ Today == {{today.valueOf()}}
     <p>Remember to play both scale and arpeggio (if applicable)! <small>Keys done today: {{doneToday}} <button type="button" class="btn btn-default" ng-click="resetDoneToday()">(Reset)</button></small></p>
     <h4>Tempo increase</h4>
     <div>
-    <input type="number" ng-model="tempoIncrease"/>
+    <input type="number" ng-model="tempoIncrease" ng-change="changeTempoIncrease()"/>
     </div>
     <h4>Keys per Day</h4>
     <div>

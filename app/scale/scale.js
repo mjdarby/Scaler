@@ -29,7 +29,7 @@ angular.module('myApp.scale', ['ngRoute', 'ngCookies', 'ui.bootstrap'])
   var cookie = $cookies.getObject('scaler') || {};
   $scope.major = "";
   $scope.tempo = 80;
-  $scope.tempoIncrease = 4;
+  $scope.tempoIncrease = cookie.hasOwnProperty('tempoIncrease') ? cookie.tempoIncrease : 4;
   $scope.selected = cookie.hasOwnProperty('selected') ? cookie.selected : [];
   $scope.keysPerDay = cookie.hasOwnProperty('keysPerDay') ? cookie.keysPerDay : 3;
   $scope.doneToday = cookie.hasOwnProperty('doneToday') ? cookie.doneToday : 0;
@@ -48,6 +48,12 @@ angular.module('myApp.scale', ['ngRoute', 'ngCookies', 'ui.bootstrap'])
   $scope.majors = major_chromatic;
   $scope.minors = minor_chromatic;
 
+  $scope.updateCookie = function(cookie) {
+    var now = new Date();
+    var expiryDate = new Date(now.getFullYear() + 10, now.getMonth(), now.getDate());
+    $cookies.putObject('scaler', cookie, {expires: expiryDate});
+  };
+
   $scope.collectLists = function() {
     $scope.forToday = [];
     var numForToday = $scope.keysPerDay - $scope.doneToday;
@@ -63,7 +69,7 @@ angular.module('myApp.scale', ['ngRoute', 'ngCookies', 'ui.bootstrap'])
   $scope.newDay = function() {
     $scope.doneToday = 0;
     cookie.doneToday = 0;
-    $cookies.putObject('scaler', cookie);
+    $scope.updateCookie(cookie);
   };
 
   $scope.today = new Date();
@@ -76,14 +82,19 @@ angular.module('myApp.scale', ['ngRoute', 'ngCookies', 'ui.bootstrap'])
 
   $scope.changeKeysPerDay = function() {
     cookie.keysPerDay = $scope.keysPerDay;
-    $cookies.putObject('scaler', cookie);
+    $scope.updateCookie(cookie);
     $scope.collectLists();
+  };
+
+  $scope.changeTempoIncrease = function() {
+    cookie.tempoIncrease = $scope.tempoIncrease;
+    $scope.updateCookie(cookie);
   };
 
   $scope.resetDoneToday = function() {
     $scope.doneToday = 0;
     cookie.doneToday = 0;
-    $cookies.putObject('scaler', cookie);
+    $scope.updateCookie(cookie);
     $scope.collectLists();
   };
 
@@ -92,7 +103,7 @@ angular.module('myApp.scale', ['ngRoute', 'ngCookies', 'ui.bootstrap'])
     $scope.selected.push(newElement);
     $scope.collectLists();
     cookie.selected = $scope.selected;
-    $cookies.putObject('scaler', cookie);
+    $scope.updateCookie(cookie);
   };
 
   $scope.addAllToList = function(keys, majorminor) {
@@ -109,7 +120,7 @@ angular.module('myApp.scale', ['ngRoute', 'ngCookies', 'ui.bootstrap'])
     }
     $scope.collectLists();
     cookie.selected = $scope.selected;
-    $cookies.putObject('scaler', cookie);
+    $scope.updateCookie(cookie);
   };
 
   $scope.increaseTempo = function(item) {
@@ -127,7 +138,7 @@ angular.module('myApp.scale', ['ngRoute', 'ngCookies', 'ui.bootstrap'])
     cookie.lastUsedDate = new Date();
     cookie.lastUsedDate.toISOString();
     cookie.doneToday = $scope.doneToday;
-    $cookies.putObject('scaler', cookie);
+    $scope.updateCookie(cookie);
   };
 
 }]);
