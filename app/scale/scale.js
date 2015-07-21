@@ -34,6 +34,9 @@ angular.module('myApp.scale', ['ngRoute', 'ngCookies', 'ui.bootstrap'])
   $scope.keysPerDay = cookie.hasOwnProperty('keysPerDay') ? cookie.keysPerDay : 3;
   $scope.doneToday = cookie.hasOwnProperty('doneToday') ? cookie.doneToday : 0;
 
+  $scope.forToday = [];
+  $scope.forTheFuture = [];
+
   if (cookie.hasOwnProperty('lastUsedDate')) {
     $scope.lastUsedDate = new Date(cookie.lastUsedDate);
   } else {
@@ -45,24 +48,48 @@ angular.module('myApp.scale', ['ngRoute', 'ngCookies', 'ui.bootstrap'])
   $scope.majors = major_chromatic;
   $scope.minors = minor_chromatic;
 
+  $scope.collectLists = function() {
+    $scope.forToday = [];
+    var numForToday = $scope.keysPerDay - $scope.doneToday;
+    var selected = $scope.selected.slice();
+    if (numForToday > 0) {
+      while (numForToday-- && selected.length > 0) {
+        $scope.forToday.push(selected.shift());
+      }
+    }
+    $scope.forTheFuture = selected;
+  };
+
   $scope.newDay = function() {
     $scope.doneToday = 0;
   };
 
-  var today = new Date();
-  today.setHours(0,0,0,0);
-  if ($scope.lastUsedDate != today) {
+  $scope.today = new Date();
+  $scope.today.setHours(0,0,0,0);
+  if ($scope.lastUsedDate.valueOf() !== $scope.today.valueOf()) {
     $scope.newDay();
   }
+
+  $scope.collectLists();
 
   $scope.changeKeysPerDay = function() {
     cookie.keysPerDay = $scope.keysPerDay;
     $cookies.putObject('scaler', cookie);
+    $scope.collectLists();
+  };
+
+
+  $scope.resetDoneToday = function() {
+      $scope.doneToday = 0;
+      cookie.doneToday = 0;
+      $cookies.putObject('scaler', cookie);
+      $scope.collectLists();
   };
 
   $scope.addToList = function(key, majorminor) {
     var newElement = {key: key + " " + majorminor, tempo: parseInt($scope.tempo, 10)};
     $scope.selected.push(newElement);
+    $scope.collectLists();
     cookie.selected = $scope.selected;
     $cookies.putObject('scaler', cookie);
   };
@@ -73,6 +100,7 @@ angular.module('myApp.scale', ['ngRoute', 'ngCookies', 'ui.bootstrap'])
     {
       $scope.selected.splice(index, 1);
     }
+    $scope.collectLists();
     cookie.selected = $scope.selected;
     $cookies.putObject('scaler', cookie);
   };
@@ -86,6 +114,8 @@ angular.module('myApp.scale', ['ngRoute', 'ngCookies', 'ui.bootstrap'])
       $scope.selected.push(item);
       $scope.doneToday += 1;
     }
+    $scope.collectLists();
+
     cookie.selected = $scope.selected;
     cookie.lastUsedDate = new Date();
     cookie.lastUsedDate.toISOString();
