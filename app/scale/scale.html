@@ -17,7 +17,7 @@ Today == {{today.valueOf()}}
     </accordion-heading>
     <div>
       <h4>Starting tempo</h4>
-      <input type="number" ng-model="tempos.quick"/>
+      <input type="number" ng-model="tempos.normal"/>
     </div>
     <div>
       <h4>Add All Majors</h4>
@@ -70,7 +70,7 @@ Today == {{today.valueOf()}}
   </div>
   <div ng-show="selected.length">
     <h3>Practice list</h3>
-    <p>Remember to play both scale and arpeggio (if applicable)! <small>Keys done today: {{doneToday}} <button type="button" class="btn btn-default" ng-click="resetDoneToday()">(Reset)</button></small></p>
+    <p>Remember to play both scale and arpeggio (if applicable)! <small>Keys done today: {{doneToday}} <button type="button" class="btn btn-default" ng-click="resetDoneToday()">Reset done counter</button></small></p>
     <div class="container">
       <div class="row">
         <div class="col-xs-6">

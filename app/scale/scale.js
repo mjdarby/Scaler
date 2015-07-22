@@ -28,7 +28,7 @@ angular.module('myApp.scale', ['ngRoute', 'ngCookies', 'ui.bootstrap'])
 
   var cookie = $cookies.getObject('scaler') || {};
   $scope.major = "";
-  $scope.tempos = {quick: 80, normal: 80};
+  $scope.tempos = {normal: 80};
   $scope.tempoIncrease = cookie.hasOwnProperty('tempoIncrease') ? cookie.tempoIncrease : 4;
   $scope.selected = cookie.hasOwnProperty('selected') ? cookie.selected : [];
   $scope.keysPerDay = cookie.hasOwnProperty('keysPerDay') ? cookie.keysPerDay : 3;
