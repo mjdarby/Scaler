@@ -4,9 +4,10 @@
 angular.module('myApp', [
   'ngRoute',
   'ngCookies',
+  'myApp.home',
   'myApp.scale',
-  'myApp.version'
+  'myApp.pieces'
 ]).
 config(['$routeProvider', function($routeProvider) {
-  $routeProvider.otherwise({redirectTo: '/scale'});
+  $routeProvider.otherwise({redirectTo: '/home'});
 }]);

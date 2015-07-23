@@ -1,0 +1,51 @@
+<accordion>
+  <accordion-group is-open="accordionStatus.open">
+    <accordion-heading>
+      Add piece<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': accordionStatus.open, 'glyphicon-chevron-right': !accordionStatus.open}"></i>
+    </accordion-heading>
+    <div>
+      <h4>Piece name</h4>
+      <input type="text" class="form-control" placeholder="Best piece ever..?" ng-model="newPiece.title"/>
+    </div>
+    <div>
+      <h4>Starting tempo</h4>
+      <input type="number" class="form-control" ng-model="newPiece.tempo"/>
+    </div>
+    <br/>
+    <div>
+    <button type="button" class="btn btn-default" ng-click="addToList()">Add piece</button>
+    </div>
+  </accordion-group>
+</accordion>
+<div>
+  <div ng-show="!pieces.length">
+    <h3>
+    Add some pieces and let's get practicing!
+    </h3>
+  </div>
+  <div ng-show="pieces.length">
+    <accordion>
+      <accordion-group ng-repeat="piece in pieces track by $index" is-open="piece.open">
+        <accordion-heading>
+          {{piece.title}}<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': piece.open, 'glyphicon-chevron-right': !piece.open}"></i>
+        </accordion-heading>
+        <div>
+          <h4>Title</h4>
+          <input type="text" class="form-control" ng-model="piece.title" ng-change="updatePiece()"/>
+        </div>
+        <div>
+          <h4>Tempo</h4>
+          <input type="text" class="form-control" ng-model="piece.tempo" ng-change="updatePiece()"/>
+        </div>
+        <div>
+          <h4>Notes</h4>
+          <textarea rows="3" class="form-control" ng-model="piece.notes" ng-change="updatePiece()"></textarea>
+        </div>
+        <br/>
+        <div>
+          <button type="button" class="btn btn-danger" ng-click="removeFromList(piece)">Remove piece</button>
+        </div>
+      </accordion-group>
+    </accordion>
+  </div>
+</div>
