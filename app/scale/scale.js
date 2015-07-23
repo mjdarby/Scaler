@@ -14,7 +14,7 @@ var myFace = function() {
   return "what";
 }
 
-angular.module('myApp.scale', ['ngRoute', 'ngCookies', 'ui.bootstrap'])
+angular.module('myApp.scale', ['ngRoute', 'ui.bootstrap'])
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/scale', {
@@ -23,26 +23,21 @@ angular.module('myApp.scale', ['ngRoute', 'ngCookies', 'ui.bootstrap'])
   });
 }])
 
-.controller('ScaleCtrl', ['$scope', '$cookies', function($scope, $cookies) {
+.controller('ScaleCtrl', ['$scope', function($scope) {
   $scope.debug = false;
 
-  $scope.cookie = $cookies.getObject('scaler') || {};
+  $scope.localStorage = localStorage;
 
   $scope.updateField = function(field, value) {
-    $scope.cookie[field] = value;
+    $scope.localStorage.setItem(field, JSON.stringify(value));
   };
 
   $scope.updateData = function() {
-    var now = new Date();
-    var expiryDate = new Date(now.getFullYear() + 10, now.getMonth(), now.getDate());
-    $cookies.putObject('scaler', $scope.cookie, {expires: expiryDate});
+    // Legacy, keeping for when we move to databases
   };
 
   $scope.getField = function(field) {
-    if ($scope.cookie.hasOwnProperty(field)) {
-        return $scope.cookie[field];
-    }
-    return null;
+    return JSON.parse($scope.localStorage.getItem(field));
   };
 
   $scope.major = "";
