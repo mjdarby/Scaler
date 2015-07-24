@@ -30,3 +30,11 @@
 }
 
 .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+
+.accordionDone {
+  background-color: #439a46;
+  color: #fffff;
+}
+
+.accordionUndone {
+}

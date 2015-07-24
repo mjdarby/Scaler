@@ -26,8 +26,18 @@ angular.module('myApp.pieces', ['ngRoute', 'ui.bootstrap'])
     return JSON.parse($scope.localStorage.getItem(field));
   };
 
-  $scope.newPiece = {name: "", tempo: 80};
+  $scope.newPiece = {name: "", tempo: 80, done: false, cssClass: "accordionUndone"};
   $scope.pieces = $scope.getField('pieces') ? $scope.getField('pieces') : [];
+
+  $scope.markUnmarkAsDone = function(piece) {
+    piece.done = !piece.done;
+    if (piece.done) {
+      piece.cssClass = "accordionDone";
+    } else {
+      piece.cssClass = "accordionUndone";
+    }
+    $scope.updatePiece();
+  };
 
   $scope.updatePiece = function() {
     $scope.updateField("pieces", $scope.pieces);
@@ -36,9 +46,11 @@ angular.module('myApp.pieces', ['ngRoute', 'ui.bootstrap'])
 
   $scope.addToList = function() {
     var newElement = {title: $scope.newPiece.title, tempo:parseInt($scope.newPiece.tempo, 10)};
-    $scope.pieces.push(newElement);
-    $scope.updateField("pieces", $scope.pieces);
-    $scope.updateData();
+    if (newElement.title != "") {
+        $scope.pieces.push(newElement);
+        $scope.updateField("pieces", $scope.pieces);
+        $scope.updateData();
+    }
   };
 
   $scope.removeFromList = function(item) {
