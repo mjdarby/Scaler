@@ -29,6 +29,19 @@ angular.module('myApp.pieces', ['ngRoute', 'ui.bootstrap'])
   $scope.newPiece = {name: "", tempo: 80, done: false, cssClass: "accordionUndone"};
   $scope.pieces = $scope.getField('pieces') ? $scope.getField('pieces') : [];
 
+  $scope.updateLists = function() {
+    $scope.donePieces = [];
+    $scope.practicePieces = [];
+    for (var pieceIdx in $scope.pieces) {
+      var piece = $scope.pieces[pieceIdx];
+      if (piece.done) {
+          $scope.donePieces.push(piece);
+      } else {
+          $scope.practicePieces.push(piece);
+      }
+    }
+  };
+
   $scope.markUnmarkAsDone = function(piece) {
     piece.done = !piece.done;
     if (piece.done) {
@@ -42,14 +55,16 @@ angular.module('myApp.pieces', ['ngRoute', 'ui.bootstrap'])
   $scope.updatePiece = function() {
     $scope.updateField("pieces", $scope.pieces);
     $scope.updateData();
+    $scope.updateLists();
   };
 
+  $scope.updateLists();
+
   $scope.addToList = function() {
-    var newElement = {title: $scope.newPiece.title, tempo:parseInt($scope.newPiece.tempo, 10)};
+    var newElement = {title: $scope.newPiece.title, targetTempo:parseInt($scope.newPiece.targetTempo, 10)};
     if (newElement.title != "") {
         $scope.pieces.push(newElement);
-        $scope.updateField("pieces", $scope.pieces);
-        $scope.updateData();
+        $scope.updatePiece();
     }
   };
 
@@ -59,8 +74,7 @@ angular.module('myApp.pieces', ['ngRoute', 'ui.bootstrap'])
     {
       $scope.pieces.splice(index, 1);
     }
-    $scope.updateField("pieces", $scope.pieces);
-    $scope.updateData();
+    $scope.updatePiece();
   };
 
 }]);
