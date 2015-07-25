@@ -32,6 +32,9 @@
             <li><a href="#/scale">Scales</a></li>
             <li><a href="#/pieces">Pieces</a></li>
           </ul>
+          <ul ng-controller="ExportImportController" class="nav navbar-nav pull-right">
+            <li><a download="content.txt" ng-href="{{ url }}">Export data</a></li>
+          </ul>
         </div>
   </nav>
 
@@ -54,6 +57,7 @@
   <script src="bower_components/angular-cookies/angular-cookies.js"></script>
   <script src="ui-bootstrap-tpls-0.13.0.min.js"></script>
   <script src="app.js"></script>
+  <script src="exportimport/exportimport.js"></script>
   <script src="scale/scale.js"></script>
   <script src="home/home.js"></script>
   <script src="pieces/pieces.js"></script>

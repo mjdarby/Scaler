@@ -6,8 +6,10 @@ angular.module('myApp', [
   'ngCookies',
   'myApp.home',
   'myApp.scale',
-  'myApp.pieces'
+  'myApp.pieces',
+  'myApp.exportimport'
 ]).
-config(['$routeProvider', function($routeProvider) {
+config(['$routeProvider', '$compileProvider', function($routeProvider, $compileProvider) {
   $routeProvider.otherwise({redirectTo: '/home'});
+  $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|tel|file|blob):/);
 }]);
