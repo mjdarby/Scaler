@@ -46,6 +46,38 @@ angular.module('myApp.scale', ['ngRoute', 'ui.bootstrap'])
   $scope.forToday = [];
   $scope.forTheFuture = [];
 
+  $scope.showLeft = function(item) {
+    return $scope.selected.indexOf(item) != 0;
+  };
+
+  $scope.showRight = function(item) {
+    return $scope.selected.indexOf(item) != $scope.selected.length - 1;
+  };
+
+  $scope.moveLeft = function(item) {
+    var index = $scope.selected.indexOf(item);
+    var newIndex = index - 1;
+    if (newIndex > -1) {
+      var movedItem = $scope.selected[newIndex];
+      $scope.selected[newIndex] = item;
+      $scope.selected[index] = movedItem;
+    }
+    $scope.updateField("selected", $scope.selected);
+    $scope.collectLists();
+  };
+
+  $scope.moveRight = function(item) {
+    var index = $scope.selected.indexOf(item);
+    var newIndex = index + 1;
+    if (newIndex < $scope.selected.length) {
+      var movedItem = $scope.selected[newIndex];
+      $scope.selected[newIndex] = item;
+      $scope.selected[index] = movedItem;
+    }
+    $scope.updateField("selected", $scope.selected);
+    $scope.collectLists();
+  };
+
   $scope.lastUsedDate = $scope.getField("lastUsedDate");
   if (!$scope.lastUsedDate) {
     $scope.lastUsedDate = new Date()

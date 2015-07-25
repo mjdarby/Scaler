@@ -95,7 +95,15 @@ Today == {{today.valueOf()}}
             <h5><strong>Tempo</strong><br/>{{item.tempo}}</h5>
             <button type="button" class="btn btn-success" ng-click="increaseTempo(item)">Done!</button>
             <button type="button" class="btn btn-danger" ng-click="removeFromList(item)">Remove</button>
+            <br/>
+            <button type="button" class="btn btn-default" ng-show="showLeft(item)" ng-click="moveLeft(item)">
+              <span class="glyphicon glyphicon-menu-left"></span>
+            </button>
+            <button type="button" class="btn btn-default" ng-show="showRight(item)" ng-click="moveRight(item)">
+              <span class="glyphicon glyphicon-menu-right"></span>
+            </button>
           </div>
+          <br/>
       </div>
     </div>
     <div class="container" ng-show="forTheFuture.length">
@@ -105,6 +113,13 @@ Today == {{today.valueOf()}}
           <h5><strong>Key</strong><br/>{{item.key}}</h5>
           <h5><strong>Tempo</strong><br/>{{item.tempo}}</h5>
           <button type="button" class="btn btn-danger" ng-click="removeFromList(item)">Remove</button>
+            <br/>
+            <button type="button" class="btn btn-default" ng-show="showLeft(item)" ng-click="moveLeft(item)">
+              <span class="glyphicon glyphicon-menu-left"></span>
+            </button>
+            <button type="button" class="btn btn-default" ng-show="showRight(item)" ng-click="moveRight(item)">
+              <span class="glyphicon glyphicon-menu-right"></span>
+            </button>
         </div>
       </div>
     </div>
