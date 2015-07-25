@@ -61,11 +61,13 @@ angular.module('myApp.pieces', ['ngRoute', 'ui.bootstrap'])
   $scope.updateLists();
 
   $scope.addToList = function() {
-    var newElement = {title: $scope.newPiece.title, targetTempo:parseInt($scope.newPiece.targetTempo, 10)};
+    var newElement = {title: $scope.newPiece.title, targetTempo:$scope.newPiece.targetTempo};
     if (newElement.title != "") {
         $scope.pieces.push(newElement);
         $scope.updatePiece();
     }
+    $scope.newPiece.title = "";
+    $scope.newPiece.targetTempo = "";
   };
 
   $scope.removeFromList = function(item) {
