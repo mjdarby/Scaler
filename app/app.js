@@ -4,12 +4,32 @@
 angular.module('myApp', [
   'ngRoute',
   'ngCookies',
+  'ngAnimate',
+  'ngToast',
   'myApp.home',
   'myApp.scale',
   'myApp.pieces',
   'myApp.exportimport'
 ]).
-config(['$routeProvider', '$compileProvider', function($routeProvider, $compileProvider) {
+config(['$routeProvider', '$compileProvider', 'ngToastProvider', function($routeProvider, $compileProvider, ngToastProvider) {
   $routeProvider.otherwise({redirectTo: '/home'});
   $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|tel|file|blob):/);
-}]);
+  ngToastProvider.configure({
+    animation: 'fade'
+  });
+}]).
+directive('numbersOnly', function() {
+  return {
+    require: 'ngModel',
+    link: function(scope, element, attrs, modelCtrl) {
+      modelCtrl.$parsers.push(function (inputValue) {
+        var transformedInput = inputValue ? inputValue.replace(/[^\d]/g,'') : null;
+        if (transformedInput != inputValue) {
+          modelCtrl.$setViewValue(transformedInput);
+          modelCtrl.$render();
+        }
+        return transformedInput;
+      });
+    }
+  }
+});

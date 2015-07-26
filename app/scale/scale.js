@@ -19,7 +19,7 @@ angular.module('myApp.scale', ['ngRoute', 'ui.bootstrap'])
   });
 }])
 
-.controller('ScaleCtrl', ['$scope', function($scope) {
+.controller('ScaleCtrl', ['$scope', 'ngToast', function($scope, ngToast) {
   $scope.debug = false;
 
   $scope.localStorage = localStorage;
@@ -135,11 +135,17 @@ angular.module('myApp.scale', ['ngRoute', 'ui.bootstrap'])
   };
 
   $scope.addToList = function(key, majorminor) {
+    if (isNaN(parseFloat($scope.tempos.normal)) || !isFinite($scope.tempos.normal))
+    {
+      ngToast.danger({content: "Please check that the starting tempo value is a number"});
+      return;
+    }
     var newElement = {key: key + " " + majorminor, tempo: parseInt($scope.tempos.normal, 10)};
     $scope.selected.push(newElement);
     $scope.collectLists();
     $scope.updateField("selected", $scope.selected);
     $scope.updateData();
+    ngToast.create("Added " + key + " " + majorminor + "!")
   };
 
   $scope.addAllToList = function(keys, majorminor) {
@@ -157,9 +163,15 @@ angular.module('myApp.scale', ['ngRoute', 'ui.bootstrap'])
     $scope.collectLists();
     $scope.updateField("selected", $scope.selected);
     $scope.updateData();
+    ngToast.danger({content: "Removed " + item.key});
   };
 
   $scope.increaseTempo = function(item) {
+    if (isNaN(parseFloat($scope.tempoIncrease)) || !isFinite($scope.tempoIncrease))
+    {
+      ngToast.danger({content: "Please check that the tempo increase value is a number"});
+      return;
+    }
     var index = $scope.selected.indexOf(item);
     if (index > -1)
     {
@@ -175,6 +187,7 @@ angular.module('myApp.scale', ['ngRoute', 'ui.bootstrap'])
     $scope.updateField("lastUsedDate", date.toISOString());
     $scope.updateField("doneToday", $scope.doneToday);
     $scope.updateData();
+    ngToast.create("Nice! Next time, " + item.tempo + "bpm!");
   };
 
 }]);

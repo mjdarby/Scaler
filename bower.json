@@ -1,6 +1,6 @@
 {
   "name": "scaler",
-  "description": "A starter project for AngularJS",
+  "description": "Musician practice tool",
   "homepage": "https://github.com/mjdarby/scaler",
   "version": "0.0.0",
   "private": true,
@@ -10,6 +10,9 @@
     "angular-cookies": "~1.4.0",
     "angular-loader": "~1.4.0",
     "angular-mocks": "~1.4.0",
+    "angular-sanitize": "~1.4.0",
+    "angular-animate": "~1.4.0",
+    "ngtoast": "~1.5.4",
     "html5-boilerplate": "~5.2.0",
     "jquery": ">= 1.9.1",
     "bootstrap": "~3.3.5"

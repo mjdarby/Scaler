@@ -9,7 +9,7 @@ angular.module('myApp.pieces', ['ngRoute', 'ui.bootstrap'])
   });
 }])
 
-.controller('PiecesCtrl', ['$scope', function($scope) {
+.controller('PiecesCtrl', ['$scope', 'ngToast', function($scope, ngToast) {
   $scope.debug = false;
 
   $scope.localStorage = localStorage;
@@ -46,8 +46,10 @@ angular.module('myApp.pieces', ['ngRoute', 'ui.bootstrap'])
     piece.done = !piece.done;
     if (piece.done) {
       piece.cssClass = "accordionDone";
+      ngToast.create("Marked '" + piece.title + "' as done!")
     } else {
       piece.cssClass = "accordionUndone";
+      ngToast.create("Marked '" + piece.title + "' as undone!")
     }
     $scope.updatePiece();
   };
@@ -68,6 +70,7 @@ angular.module('myApp.pieces', ['ngRoute', 'ui.bootstrap'])
     }
     $scope.newPiece.title = "";
     $scope.newPiece.targetTempo = "";
+    ngToast.create("Added new piece '" + newElement.title + "'!")
   };
 
   $scope.removeFromList = function(item) {
@@ -77,6 +80,7 @@ angular.module('myApp.pieces', ['ngRoute', 'ui.bootstrap'])
       $scope.pieces.splice(index, 1);
     }
     $scope.updatePiece();
+    ngToast.danger({content : "Deleted '" + item.title + "'"});
   };
 
 }]);

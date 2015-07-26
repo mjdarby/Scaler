@@ -1,6 +1,6 @@
 angular.module('myApp.exportimport', [])
 
-.controller('ExportImportController', ['$scope', '$route', function($scope, $route) {
+.controller('ExportImportController', ['$scope', '$route', 'ngToast', function($scope, $route, ngToast) {
   var content = JSON.stringify(localStorage);
   var blob = new Blob([ content ], { type : 'text/plain' });
   $scope.url = (window.URL || window.webkitURL).createObjectURL( blob );
@@ -19,8 +19,11 @@ angular.module('myApp.exportimport', [])
           localStorage[key] = localStorageJSON[key];
         }
         $route.reload();
+        ngToast.create("Successfully imported data!");
       } catch (e) {
-        alert("Didn't manage to import your data!");
+        ngToast.danger({
+          content: "Failed to import data!"
+        });
       }
     };
     reader.readAsText(element.files[0]);
