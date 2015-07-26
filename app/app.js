@@ -28,7 +28,7 @@ directive('numbersOnly', function() {
           modelCtrl.$setViewValue(transformedInput);
           modelCtrl.$render();
         }
-        return transformedInput;
+        return parseInt(transformedInput,10);
       });
     }
   }
